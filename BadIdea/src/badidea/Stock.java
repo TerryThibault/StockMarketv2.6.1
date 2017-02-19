@@ -1,15 +1,13 @@
-package badidea;
-
 import java.net.*;
 import java.io.*;
-
+import java.util.Scanner;
 public class Stock {
 	public String name; // The abbreviated, stock exchange name. (e.g. GOOG)
 	public double price_current;
 
 	public Stock(String name) throws Exception {
 		this.name = name;
-		price_current = Get_Price(name);
+		price_current = Get_Price("GOOG");
 	}
 	
 	// This function only works with the depreciated Google Finance API, which can 
@@ -26,7 +24,9 @@ public class Stock {
 			if (inputLine.length() < 5)
 				continue;
 			if (inputLine.substring(0, 5).equals(",\"l_c"))
-				return Double.parseDouble(inputLine.substring(12, 18)); // This only works on 5 digit stock prices
+				Scanner scanner = new Scanner(inputLine);
+				return Scanner.nextDouble();
+				//return Double.parseDouble(inputLine.substring(12, 18)); // This only works on 5 digit stock prices
 											// Can be made better by using 'split' func
 		}
 
