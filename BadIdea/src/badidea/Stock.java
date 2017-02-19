@@ -25,10 +25,10 @@ public class Stock {
 				continue;
 			if (inputLine.substring(0, 5).equals(",\"l_c"))
 				return Double.parseDouble(inputLine.substring(12, 18)); // This only works on 5 digit stock prices
+											// Can be made better by using 'split' func
 		}
 
 		in.close();
-		return 100;
+		return 100; // An error has occurred.
 	}
-
 }
