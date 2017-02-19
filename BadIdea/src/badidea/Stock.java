@@ -1,6 +1,7 @@
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
+
 public class Stock {
 	public String name; // The abbreviated, stock exchange name. (e.g. GOOG)
 	public double price_current;
@@ -19,13 +20,13 @@ public class Stock {
 					new InputStreamReader(
 					conn.getInputStream()));
 		String inputLine;
-
+		Scanner scanner = null;
 		while ((inputLine = in.readLine()) != null) {
 			if (inputLine.length() < 5)
 				continue;
 			if (inputLine.substring(0, 5).equals(",\"l_c"))
-				Scanner scanner = new Scanner(inputLine);
-				return Scanner.nextDouble();
+				scanner = new Scanner(inputLine);
+				return scanner.nextDouble();
 				//return Double.parseDouble(inputLine.substring(12, 18)); // This only works on 5 digit stock prices
 											// Can be made better by using 'split' func
 		}
