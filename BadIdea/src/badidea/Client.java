@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class Client {
     final String promptMessage = "What would you like to do?\n(Type 'help' for a list of commands)";
-    final String stockMessage = "Current stock: %s\nFull name: %s\nCurrent price: %f";
+    final String stockMessage = "Current stock: %s\nCurrent price: %f";
     final String errorMessage = "Unrecognized command";
+    final String confirmMessage = "Are you sure you wish to %s %d of stock %s?\nTotal cost: %f\nFunds remaining: %f";
     User user;
     boolean quit;
-    // Stock currentStock;
+    Stock currentStock;
     
     public Client() {    
     }
@@ -68,21 +69,48 @@ public class Client {
     
     private void getInfo(String requestString) {
         // make a request and store the result in Stock currentStock
-        System.out.println("GETINFO: " + requestString);
+        try {
+            currentStock = new Stock(requestString);
+        }
+        catch (Exception ex) {
+            System.out.println("Could not get stock");
+        }
         printCurrentStock();
     }
     
     private void buy(int quantity) {
-        System.out.println("BUY: " + quantity);
+        double total = currentStock.price_current * quantity;
+        if(total > user.funds) {
+            System.out.println("Insufficient funds");
+        }
+        else {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println(String.format(confirmMessage, "buy", quantity, currentStock.name, total, user.funds));
+            if(scanner.nextLine().equals("yes")) {
+                user.funds -= total;
+            }
+            printCurrentFunds();
+        }
     }
     
     private void sell(int quantity) {
-        System.out.println("SELL: " + quantity);
+        double total = currentStock.price_current * quantity;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(String.format(confirmMessage, "sell", quantity, currentStock.name, total, user.funds));
+        if(scanner.nextLine().equals("yes")) {
+            user.funds += total;
+        }
+        printCurrentFunds();
+    }
+    
+    private void printCurrentFunds() {
+        System.out.println("Current funds: " + user.funds);
     }
     
     private void printCurrentStock() {
-        System.out.println("INFO");
-        // System.out.println(stockMessage)
+        if(haveStock()) {
+            System.out.println(String.format(stockMessage, currentStock.name, currentStock.price_current));
+        }
     }
     
     private void printHelp() {
@@ -95,13 +123,13 @@ public class Client {
         System.out.println("");
     }
     
-//    private boolean haveStock() {
-//        if(currentStock == null) {
-//            System.out.println("No stock is currently selected");
-//            return false;
-//        }
-//        else {
-//            return true;
-//        }
-//    }
+    private boolean haveStock() {
+        if(currentStock == null) {
+            System.out.println("No stock is currently selected");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }

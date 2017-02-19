@@ -1,3 +1,5 @@
+package badidea;
+
 import java.net.*;
 import java.io.*;
 
@@ -7,7 +9,7 @@ public class Stock {
 
 	public Stock(String name) throws Exception {
 		this.name = name;
-		price_current = Get_Price("GOOG");
+		price_current = Get_Price(name);
 	}
 	
 	// This function only works with the depreciated Google Finance API, which can 
