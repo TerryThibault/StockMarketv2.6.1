@@ -1,4 +1,4 @@
-package badidea;
+//package badidea;
 
 // HERE COMES SOME STUFF
 public class BadIdea {

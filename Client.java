@@ -55,10 +55,20 @@ public class Client {
                 getInfo(arg2);
                 break;
             case "buy":
-                buy(Integer.parseInt(arg2));
+                try {
+                    buy(Integer.parseInt(arg2));
+                }
+                catch (Exception ex) {
+                    System.out.println("Enter a valid number");
+                }
                 break;
             case "sell":
-                sell(Integer.parseInt(arg2));
+                try {
+                    sell(Integer.parseInt(arg2));
+                }
+                catch (Exception ex) {
+                    System.out.println("Enter a valid number");
+                }
                 break;
             default:
                 System.out.println(errorMessage);
