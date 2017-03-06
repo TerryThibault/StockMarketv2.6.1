@@ -1,4 +1,4 @@
-package badidea;
+//package badidea;
 
 import java.util.Scanner;
 
@@ -6,7 +6,7 @@ public class Client {
     final String promptMessage = "What would you like to do?\n(Type 'help' for a list of commands)";
     final String stockMessage = "Current stock: %s\nCurrent price: %f";
     final String errorMessage = "Unrecognized command";
-    final String confirmMessage = "Are you sure you wish to %s %d of stock %s?\nTotal cost: %f\nFunds remaining: %f";
+    final String confirmMessage = "Are you sure you wish to %s %d of stock %s?\nTotal cost: %f\nFunds remaining after transaction: %f";
     User user;
     boolean quit;
     Stock currentStock;
@@ -74,6 +74,7 @@ public class Client {
         }
         catch (Exception ex) {
             System.out.println("Could not get stock");
+	    System.out.println(ex);
         }
         printCurrentStock();
     }
@@ -85,8 +86,9 @@ public class Client {
         }
         else {
             Scanner scanner = new Scanner(System.in);
-            System.out.println(String.format(confirmMessage, "buy", quantity, currentStock.name, total, user.funds));
-            if(scanner.nextLine().equals("yes")) {
+            System.out.println(String.format(confirmMessage, "buy", quantity, currentStock.name, total, user.funds - total));
+            String input = scanner.nextLine();
+            if(input.equals("yes") || input.equals("y") || input.equals("Y") || input.equals("YES")) {
                 user.funds -= total;
             }
             printCurrentFunds();
@@ -97,7 +99,8 @@ public class Client {
         double total = currentStock.price_current * quantity;
         Scanner scanner = new Scanner(System.in);
         System.out.println(String.format(confirmMessage, "sell", quantity, currentStock.name, total, user.funds));
-        if(scanner.nextLine().equals("yes")) {
+        String input = scanner.nextLine();
+        if(input.equals("yes") || input.equals("y") || input.equals("Y") || input.equals("YES")) {
             user.funds += total;
         }
         printCurrentFunds();
