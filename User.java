@@ -7,6 +7,6 @@ public class User {
     public User(String username) {
         name = username;
         funds = 100000;
-        System.out.println(String.format("New user %s created with %f funds", name, funds));
+        System.out.println(String.format("New user %s created with %.2f funds", name, funds));
     }
 }
